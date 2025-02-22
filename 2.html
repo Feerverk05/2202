@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent Window</title>
+</head>
+<body>
+
+    <h1>Parent Window</h1>
+    <button onclick="sendMessageToIframe()">Send Message to Iframe</button>
+
+    <iframe id="childFrame" src="22.html" width="400" height="200" style="border:1px solid black;"></iframe>
+
+    <p><strong>Message from Iframe:</strong> <span id="iframeMessage"></span></p>
+
+    <script>
+        const iframe = document.getElementById("childFrame");
+
+        // Відправка повідомлення в iframe
+        function sendMessageToIframe() {
+            iframe.contentWindow.postMessage("Hello from Parent!", "*");
+        }
+
+        // Отримання повідомлення від iframe
+        window.addEventListener("message", (event) => {
+            if (event.origin !== window.location.origin) return; // Захист від небезпечних джерел
+            document.getElementById("iframeMessage").textContent = event.data;
+        });
+    </script>
+
+</body>
+</html>
